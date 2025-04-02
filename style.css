@@ -1,0 +1,95 @@
+/* style.css */
+
+body {
+  font-family: 'Lora', serif;
+  background-color: #fdfcfb;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  transition: transform 0.2s;
+}
+
+.container:hover {
+  transform: translateY(-2px);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #aa8866;
+  font-family: 'Playfair Display', serif;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 6px;
+  font-size: 16px;
+  width: 100%;
+  transition: border 0.3s ease;
+}
+
+input:focus, select:focus {
+  border-color: #aa8866;
+  outline: none;
+}
+
+input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+button {
+  background-color: #aa8866;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  margin-top: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #8b6d50;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .container {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  input, select, button {
+    font-size: 15px;
+  }
+}

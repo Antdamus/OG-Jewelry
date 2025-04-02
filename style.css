@@ -70,8 +70,7 @@ body::before {
 /* === BUTTONS === */
 .enter-button,
 button[type="submit"] {
-  display: block;
-  margin: 0 auto;
+  display: inline-block;
   padding: 12px 24px;
   font-size: 16px;
   text-decoration: none;
@@ -81,8 +80,8 @@ button[type="submit"] {
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   border: none;
   cursor: pointer;
-  width: 80%;
-  max-width: 300px;
+  max-width: 100%;
+  text-align: center;
 }
 
 .enter-button:hover,
@@ -166,9 +165,5 @@ input[type="checkbox"] {
   textarea,
   button {
     font-size: 15px;
-  }
-
-  button {
-    width: 90%;
   }
 }

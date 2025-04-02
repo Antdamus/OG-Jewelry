@@ -1,59 +1,71 @@
-/* === GLOBAL STYLES === */
+/* style.css */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Cormorant Garamond', serif;
-  background: url('images/pexels-pixabay-248077.jpg') no-repeat center center fixed;
-  background-size: cover;
+  background-color: #111;
+  color: #f1f1f1;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* === SOFT WHITE OVERLAY === */
 body::before {
   content: "";
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 0;
 }
 
-/* === CONTAINER SHARED === */
+.dark-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 20px;
+  background: transparent;
+  border: none;
+  color: #f1f1f1;
+  cursor: pointer;
+  z-index: 1000;
+}
+
 .welcome-container,
 .form-container {
-  position: relative;
-  z-index: 1;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(20, 20, 20, 0.9);
   padding: 40px;
   border-radius: 16px;
   text-align: center;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
   max-width: 500px;
   width: 90%;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeInUp 1.2s ease forwards;
+  z-index: 1;
 }
 
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.logo {
+  max-width: 100px;
+  margin: 0 auto 20px;
+  display: block;
 }
 
-/* === SHIMMER BRAND NAME === */
+.decor-img {
+  max-width: 140px;
+  margin: 0 auto 20px;
+  display: block;
+  border-radius: 10px;
+}
+
 .brand-name {
   font-family: 'Playfair Display', serif;
   font-size: 48px;
-  margin-bottom: 10px;
-  background: linear-gradient(90deg, #aa8866, #d4af7f, #aa8866);
+  background: linear-gradient(90deg, #f5e3c2, #d4af7f, #f5e3c2);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shine 3s linear infinite;
+  margin-bottom: 10px;
 }
 
 @keyframes shine {
@@ -63,11 +75,10 @@ body::before {
 
 .subtitle {
   font-size: 20px;
-  color: #555;
+  color: #ccc;
   margin-bottom: 30px;
 }
 
-/* === BUTTONS === */
 .enter-button,
 button[type="submit"] {
   display: inline-block;
@@ -75,7 +86,7 @@ button[type="submit"] {
   font-size: 16px;
   text-decoration: none;
   color: #fff;
-  background-color: #aa8866;
+  background-color: #d4af7f;
   border-radius: 8px;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   border: none;
@@ -86,11 +97,10 @@ button[type="submit"] {
 
 .enter-button:hover,
 button[type="submit"]:hover {
-  background-color: #8b6d50;
-  box-shadow: 0 0 12px rgba(170, 136, 102, 0.6);
+  background-color: #b98d54;
+  box-shadow: 0 0 12px rgba(212, 175, 127, 0.5);
 }
 
-/* === FORM STYLES === */
 form {
   display: flex;
   flex-direction: column;
@@ -100,26 +110,24 @@ form {
 
 label {
   font-weight: 500;
-  color: #333;
+  color: #ddd;
 }
 
 input[type="text"],
 input[type="number"],
-input[type="email"],
-select,
-textarea {
+select {
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #333;
   font-size: 16px;
   width: 100%;
-  transition: border 0.3s ease;
+  background-color: #222;
+  color: #f1f1f1;
 }
 
 input:focus,
-select:focus,
-textarea:focus {
-  border-color: #aa8866;
+select:focus {
+  border-color: #d4af7f;
   outline: none;
 }
 
@@ -128,42 +136,23 @@ input[type="checkbox"] {
   transform: scale(1.2);
 }
 
-/* === FORM FIELD ANIMATIONS === */
-.form-container form .fade-field {
+.fade-field {
   opacity: 0;
   transform: translateY(12px);
   animation: fadeInUp 0.6s ease forwards;
 }
 
-.form-container form .fade-delay-1 { animation-delay: 0.1s; }
-.form-container form .fade-delay-2 { animation-delay: 0.2s; }
-.form-container form .fade-delay-3 { animation-delay: 0.3s; }
-.form-container form .fade-delay-4 { animation-delay: 0.4s; }
-.form-container form .fade-delay-5 { animation-delay: 0.5s; }
-.form-container form .fade-delay-6 { animation-delay: 0.6s; }
-.form-container form .fade-delay-7 { animation-delay: 0.7s; }
-.form-container form .fade-delay-8 { animation-delay: 0.8s; }
+.fade-delay-1 { animation-delay: 0.1s; }
+.fade-delay-2 { animation-delay: 0.2s; }
+.fade-delay-3 { animation-delay: 0.3s; }
+.fade-delay-4 { animation-delay: 0.4s; }
+.fade-delay-5 { animation-delay: 0.5s; }
+.fade-delay-6 { animation-delay: 0.6s; }
+.fade-delay-7 { animation-delay: 0.7s; }
+.fade-delay-8 { animation-delay: 0.8s; }
 
-/* === RESPONSIVE DESIGN === */
 @media (max-width: 768px) {
-  .welcome-container,
-  .form-container {
-    padding: 24px;
-    border-radius: 12px;
-  }
-
-  .brand-name {
-    font-size: 36px;
-  }
-
-  .subtitle {
-    font-size: 18px;
-  }
-
-  input,
-  select,
-  textarea,
-  button {
-    font-size: 15px;
-  }
+  .brand-name { font-size: 36px; }
+  .subtitle { font-size: 18px; }
+  input, select, button { font-size: 15px; }
 }

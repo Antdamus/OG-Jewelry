@@ -1,95 +1,139 @@
-/* style.css */
-
+/* === GLOBAL STYLES === */
 body {
-  font-family: 'Lora', serif;
-  background-color: #fdfcfb;
-  color: #333;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  font-family: 'Cormorant Garamond', serif;
+  background: url('images/pexels-pixabay-248077.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.container {
-  background-color: #fff;
-  padding: 30px 40px;
+/* === SOFT WHITE OVERLAY === */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  z-index: 0;
+}
+
+/* === SHARED CONTAINER === */
+.welcome-container,
+.form-container {
+  position: relative;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 40px;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  width: 100%;
-  transition: transform 0.2s;
-}
-
-.container:hover {
-  transform: translateY(-2px);
-}
-
-h2 {
   text-align: center;
-  margin-bottom: 24px;
-  color: #aa8866;
-  font-family: 'Playfair Display', serif;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 90%;
 }
 
+/* === WELCOME PAGE STYLES === */
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  color: #aa8866;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.enter-button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 16px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #aa8866;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.enter-button:hover {
+  background-color: #8b6d50;
+}
+
+/* === FORM PAGE STYLES === */
 form {
   display: flex;
   flex-direction: column;
+  gap: 16px;
+  text-align: left;
 }
 
 label {
-  margin-bottom: 12px;
   font-weight: 500;
+  color: #333;
 }
 
 input[type="text"],
 input[type="number"],
-select {
+input[type="email"],
+select,
+textarea {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  margin-top: 6px;
   font-size: 16px;
   width: 100%;
   transition: border 0.3s ease;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus,
+textarea:focus {
   border-color: #aa8866;
   outline: none;
 }
 
 input[type="checkbox"] {
   margin-right: 8px;
+  transform: scale(1.2);
 }
 
-button {
+button[type="submit"] {
   background-color: #aa8866;
   color: white;
   border: none;
   padding: 12px;
   font-size: 16px;
-  margin-top: 20px;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 100%;
 }
 
-button:hover {
+button[type="submit"]:hover {
   background-color: #8b6d50;
 }
 
-/* Mobile responsiveness */
+/* === RESPONSIVE DESIGN === */
 @media (max-width: 600px) {
-  .container {
+  .welcome-container,
+  .form-container {
     padding: 20px;
     border-radius: 12px;
   }
 
-  h2 {
-    font-size: 20px;
+  .brand-name {
+    font-size: 36px;
   }
 
-  input, select, button {
+  .subtitle {
+    font-size: 18px;
+  }
+
+  input, select, textarea, button {
     font-size: 15px;
   }
 }

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Info Form</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lora&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h2>User Information Form</h2>
+    <form id="userForm">
+      <label>First Name:
+        <input type="text" name="firstName" required>
+      </label>
+
+      <label>Last Name:
+        <input type="text" name="lastName" required>
+      </label>
+
+      <label>Address:
+        <input type="text" name="address" required>
+      </label>
+
+      <label>ZIP Code:
+        <input type="text" name="zipCode" required pattern="\d{5}" title="Enter a 5-digit ZIP code">
+      </label>
+
+      <label>Age:
+        <input type="number" name="age" required min="0">
+      </label>
+
+      <label>Sex:
+        <select name="sex" required>
+          <option value="">Select...</option>
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+          <option value="other">Other</option>
+          <option value="prefer_not_to_say">Prefer not to say</option>
+        </select>
+      </label>
+
+      <label>
+        <input type="checkbox" name="consent" required>
+        I agree to the collection and use of my data to improve my experience.
+      </label>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("userForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const payload = Object.fromEntries(formData.entries());
+      payload.timestamp = new Date().toISOString();
+
+      console.log("Submitting data:", payload);
+
+      const response = await fetch("https://your-backend-api.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        alert("Thanks for submitting!");
+        this.reset();
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    });
+  </script>
+</body>
+</html>

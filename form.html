@@ -13,7 +13,6 @@
 
   <div class="form-container">
     <img src="images/logo.png" alt="OG Jewelry Logo" class="logo">
-    
     <p class="subtitle">Tell us a bit about you</p>
 
     <form id="userForm">
@@ -61,7 +60,7 @@
       document.body.classList.toggle('dark');
     });
 
-    document.getElementById("userForm").addEventListener("submit", async function(e) {
+    document.getElementById("userForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const formData = new FormData(this);
       const payload = Object.fromEntries(formData.entries());

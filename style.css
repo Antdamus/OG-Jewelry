@@ -20,7 +20,7 @@ body::before {
   z-index: 0;
 }
 
-/* === CONTAINERS === */
+/* === CONTAINER SHARED === */
 .welcome-container,
 .form-container {
   position: relative;
@@ -32,8 +32,6 @@ body::before {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
   max-width: 500px;
   width: 90%;
-
-  /* Page entrance animation */
   opacity: 0;
   transform: translateY(10px);
   animation: fadeInUp 1.2s ease forwards;
@@ -46,7 +44,7 @@ body::before {
   }
 }
 
-/* === SHIMMER TEXT EFFECT === */
+/* === SHIMMER BRAND NAME === */
 .brand-name {
   font-family: 'Playfair Display', serif;
   font-size: 48px;
@@ -72,7 +70,8 @@ body::before {
 /* === BUTTONS === */
 .enter-button,
 button[type="submit"] {
-  display: inline-block;
+  display: block;
+  margin: 0 auto;
   padding: 12px 24px;
   font-size: 16px;
   text-decoration: none;
@@ -82,7 +81,8 @@ button[type="submit"] {
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: 80%;
+  max-width: 300px;
 }
 
 .enter-button:hover,
@@ -145,11 +145,11 @@ input[type="checkbox"] {
 .form-container form .fade-delay-7 { animation-delay: 0.7s; }
 .form-container form .fade-delay-8 { animation-delay: 0.8s; }
 
-/* === RESPONSIVE === */
-@media (max-width: 600px) {
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
   .welcome-container,
   .form-container {
-    padding: 20px;
+    padding: 24px;
     border-radius: 12px;
   }
 
@@ -161,7 +161,14 @@ input[type="checkbox"] {
     font-size: 18px;
   }
 
-  input, select, textarea, button {
+  input,
+  select,
+  textarea,
+  button {
     font-size: 15px;
+  }
+
+  button {
+    width: 90%;
   }
 }

@@ -32,23 +32,52 @@ body::before {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
   max-width: 500px;
   width: 90%;
+
+  /* Fade-in animation */
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 1.2s ease forwards;
 }
 
-/* === WELCOME PAGE STYLES === */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === BRAND NAME WITH SHIMMER === */
 .brand-name {
   font-family: 'Playfair Display', serif;
   font-size: 48px;
-  color: #aa8866;
   margin-bottom: 10px;
+
+  background: linear-gradient(90deg, #aa8866, #d4af7f, #aa8866);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite;
 }
 
+@keyframes shine {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* === SUBTITLE === */
 .subtitle {
   font-size: 20px;
   color: #555;
   margin-bottom: 30px;
 }
 
-.enter-button {
+/* === BUTTON STYLES === */
+.enter-button,
+button[type="submit"] {
   display: inline-block;
   padding: 12px 24px;
   font-size: 16px;
@@ -56,11 +85,16 @@ body::before {
   color: #fff;
   background-color: #aa8866;
   border-radius: 8px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  cursor: pointer;
+  width: 100%;
 }
 
-.enter-button:hover {
+.enter-button:hover,
+button[type="submit"]:hover {
   background-color: #8b6d50;
+  box-shadow: 0 0 12px rgba(170, 136, 102, 0.6);
 }
 
 /* === FORM PAGE STYLES === */
@@ -99,22 +133,6 @@ textarea:focus {
 input[type="checkbox"] {
   margin-right: 8px;
   transform: scale(1.2);
-}
-
-button[type="submit"] {
-  background-color: #aa8866;
-  color: white;
-  border: none;
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 100%;
-}
-
-button[type="submit"]:hover {
-  background-color: #8b6d50;
 }
 
 /* === RESPONSIVE DESIGN === */

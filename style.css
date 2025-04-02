@@ -16,7 +16,7 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
   z-index: 0;
 }
 
@@ -48,13 +48,22 @@ body::before {
 }
 
 .hero-bg {
-  background-image: url("images/decor-top.jpg");
+  background-image: url("images/hero-bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-blend-mode: overlay;
   background-color: rgba(20, 20, 20, 0.92);
   box-shadow: 0 0 60px rgba(212, 175, 127, 0.1), 0 0 20px rgba(212, 175, 127, 0.4);
+}
+
+.form-container {
+  background-image: url("images/decor-top.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+  background-color: rgba(20, 20, 20, 0.92);
 }
 
 /* === LOGO === */

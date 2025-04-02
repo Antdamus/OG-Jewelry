@@ -13,28 +13,28 @@
     <p class="subtitle">Tell us a bit about you</p>
 
     <form id="userForm">
-      <label for="firstName">First Name:
-        <input type="text" id="firstName" name="firstName" required>
+      <label class="fade-field fade-delay-1">First Name:
+        <input type="text" name="firstName" required>
       </label>
 
-      <label for="lastName">Last Name:
-        <input type="text" id="lastName" name="lastName" required>
+      <label class="fade-field fade-delay-2">Last Name:
+        <input type="text" name="lastName" required>
       </label>
 
-      <label for="address">Address:
-        <input type="text" id="address" name="address" required>
+      <label class="fade-field fade-delay-3">Address:
+        <input type="text" name="address" required>
       </label>
 
-      <label for="zipCode">ZIP Code:
-        <input type="text" id="zipCode" name="zipCode" required pattern="\d{5}" title="Enter a 5-digit ZIP code">
+      <label class="fade-field fade-delay-4">ZIP Code:
+        <input type="text" name="zipCode" required pattern="\d{5}" title="Enter a 5-digit ZIP code">
       </label>
 
-      <label for="age">Age:
-        <input type="number" id="age" name="age" required min="0">
+      <label class="fade-field fade-delay-5">Age:
+        <input type="number" name="age" required min="0">
       </label>
 
-      <label for="sex">Sex:
-        <select id="sex" name="sex" required>
+      <label class="fade-field fade-delay-6">Sex:
+        <select name="sex" required>
           <option value="">Select...</option>
           <option value="female">Female</option>
           <option value="male">Male</option>
@@ -43,12 +43,12 @@
         </select>
       </label>
 
-      <label>
+      <label class="fade-field fade-delay-7">
         <input type="checkbox" name="consent" required>
         I agree to the collection and use of my data to improve my experience.
       </label>
 
-      <button type="submit">Submit</button>
+      <button type="submit" class="fade-field fade-delay-8">Submit</button>
     </form>
   </div>
 
@@ -62,7 +62,7 @@
 
       console.log("Submitting data:", payload);
 
-      // Replace with your real backend endpoint when ready
+      // Replace this with your backend endpoint
       const response = await fetch("https://your-backend-api.com/submit", {
         method: "POST",
         headers: {

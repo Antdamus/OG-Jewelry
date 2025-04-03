@@ -191,3 +191,15 @@ button[type="submit"]:hover {
     font-size: 18px;
   }
 }
+
+/* === HERO WRAPPER CENTERING === */
+.hero-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  z-index: 2;
+  position: relative;
+}

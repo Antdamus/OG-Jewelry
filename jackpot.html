@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OG Jackpot Discount</title>
+  <link rel="stylesheet" href="jackpot.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Libre+Franklin:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="dark jackpot-bg">
+  <canvas id="fireworksCanvas"></canvas>
+
+  <!-- 🪙 Coin container for rain -->
+  <div id="coin-container"></div>
+
+  <div class="jackpot-wrapper">
+    <h1 class="title">🎰 Spin for Your Discount</h1>
+    <div class="amount-box" id="amountBox">$--</div>
+    <div class="code-box hidden">
+      Your code: <span id="codeValue">------</span>
+    </div>
+    <button id="spinButton" class="spin-button">Spin Now!</button>
+  </div>
+
+  <script src="jackpot.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</body>
+</html>

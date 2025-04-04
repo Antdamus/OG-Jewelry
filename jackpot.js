@@ -13,8 +13,14 @@ const codeBox = document.querySelector('.code-box');
 const spinButton = document.getElementById('spinButton');
 const coinContainer = document.getElementById('coin-container');
 
+// 🎲 Exponential draw: λ ≈ 0.138, clamped to 1–50
+function getExponentialDraw(lambda = 0.1535, max = 50) {
+  let x = -Math.log(1 - Math.random()) / lambda;
+  return Math.min(max, Math.max(1, Math.round(x)));
+}
+
 spinButton.addEventListener('click', () => {
-  // 🧽 Clear canvas
+  // Clear fireworks canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Disable button & show spinner
@@ -43,7 +49,7 @@ spinButton.addEventListener('click', () => {
       spinCount++;
       setTimeout(spinStep, delay);
     } else {
-      const finalAmount = Math.floor(Math.random() * 6) + 45;
+      const finalAmount = getExponentialDraw();
       amountBox.textContent = `$${finalAmount}`;
       amountBox.style.transform = 'scale(1.3)';
       setTimeout(() => {
@@ -96,26 +102,20 @@ function launchCoinRain(amount = 30) {
     const coin = document.createElement('div');
     coin.classList.add('coin');
 
-    // 🎲 Random size between 20px and 40px
     const size = 20 + Math.random() * 20;
     coin.style.width = `${size}px`;
     coin.style.height = `${size}px`;
 
-    // 🎲 Random animation duration (fall speed)
     const duration = (1 + Math.random()).toFixed(2);
     coin.style.animationDuration = `${duration}s`;
 
-    // 🎲 Random horizontal position
     coin.style.left = Math.random() * 100 + 'vw';
-
-    // 🎲 Random starting rotation angle
     coin.style.transform = `rotate(${Math.random() * 360}deg)`;
 
     document.getElementById('coin-container').appendChild(coin);
     setTimeout(() => coin.remove(), 2000);
   }
 }
-
 
 // --- Fireworks ---
 const canvas = document.getElementById('fireworksCanvas');

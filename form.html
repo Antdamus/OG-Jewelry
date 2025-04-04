@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>OG Jewelry - Form</title>
+  <title>OG Jewelry - Sign Up</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Libre+Franklin:wght@300;400;600&display=swap" rel="stylesheet">
@@ -13,52 +13,105 @@
 
   <div class="form-container">
     <img src="images/logo.png" alt="OG Jewelry Logo" class="logo">
-    <p class="subtitle">Tell us a bit about you</p>
+    <p class="subtitle">Create your account</p>
 
     <form id="userForm">
-      <label class="fade-field fade-delay-1">First Name:
+      <label>Username:
+        <input type="text" name="username" required placeholder="Choose a username">
+      </label>
+
+      <label>Password:
+        <div class="password-wrapper">
+          <input type="password" id="password" name="password" required placeholder="Enter a password">
+          <button type="button" class="toggle-password" onclick="togglePassword('password')">👁</button>
+        </div>
+      </label>
+
+      <label>Confirm Password:
+        <div class="password-wrapper">
+          <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Re-enter your password" onpaste="return false;">
+        </div>
+      </label>
+
+      <label>First Name:
         <input type="text" name="firstName" required placeholder="Enter your first name">
       </label>
 
-      <label class="fade-field fade-delay-2">Last Name:
+      <label>Last Name:
         <input type="text" name="lastName" required placeholder="Enter your last name">
       </label>
 
-      <label class="fade-field fade-delay-3">Address:
-        <input type="text" name="address" required placeholder="Street, city, state">
+      <label>Email Address:
+        <input type="email" id="email" name="email" required placeholder="Enter your email">
       </label>
 
-      <label class="fade-field fade-delay-4">ZIP Code:
-        <input type="text" name="zipCode" required pattern="\d{5}" title="Enter a 5-digit ZIP code" placeholder="12345">
+      <label>Confirm Email Address:
+        <div class="password-wrapper">
+          <input type="email" id="confirmEmail" name="confirmEmail" required placeholder="Re-enter your email">
+        </div>
+        <small style="display:block; margin-top:4px; font-size:13px; color:#ccc;">
+          A confirmatory email will be sent to this address.
+        </small>
       </label>
 
-      <label class="fade-field fade-delay-5">Age:
-        <input type="number" name="age" required min="0" placeholder="Your age">
+      <label>Phone Number (optional):
+        <input type="tel" name="phone" placeholder="To receive SMS alerts when the show goes live">
       </label>
 
-      <label class="fade-field fade-delay-6">Sex:
-        <select name="sex" required>
-          <option value="">Select...</option>
-          <option value="female">Female</option>
-          <option value="male">Male</option>
-          <option value="other">Other</option>
-          <option value="prefer_not_to_say">Prefer not to say</option>
-        </select>
+      <label>ZIP Code (optional):
+        <input type="text" name="zipCode" pattern="\\d{5}" placeholder="12345">
       </label>
 
-      <label class="fade-field fade-delay-7 checkbox-label">
-        <input type="checkbox" name="consent" required>
-        I agree to the collection and use of my data to improve my experience.
-      </label>
-
-      <button type="submit" class="fade-field fade-delay-8">Submit</button>
+      <button type="submit" id="submitBtn" disabled>Submit</button>
     </form>
   </div>
 
   <script>
-    document.getElementById('darkToggle').addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-    });
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const email = document.getElementById("email");
+    const confirmEmail = document.getElementById("confirmEmail");
+    const submitBtn = document.getElementById("submitBtn");
+
+    function togglePassword(fieldId) {
+      const field = document.getElementById(fieldId);
+      field.type = field.type === "password" ? "text" : "password";
+    }
+
+    function validatePassword() {
+      if (confirmPassword.value.length === 0) {
+        confirmPassword.classList.remove("valid", "invalid");
+        return false;
+      }
+
+      const match = password.value === confirmPassword.value && password.value.length > 0;
+      confirmPassword.classList.toggle("valid", match);
+      confirmPassword.classList.toggle("invalid", !match);
+      return match;
+    }
+
+    function validateEmail() {
+      if (confirmEmail.value.length === 0) {
+        confirmEmail.classList.remove("valid", "invalid");
+        return false;
+      }
+
+      const match = email.value === confirmEmail.value && email.value.length > 0;
+      confirmEmail.classList.toggle("valid", match);
+      confirmEmail.classList.toggle("invalid", !match);
+      return match;
+    }
+
+    function checkAll() {
+      const pass = validatePassword();
+      const mail = validateEmail();
+      submitBtn.disabled = !(pass && mail);
+    }
+
+    password.addEventListener("input", checkAll);
+    confirmPassword.addEventListener("input", checkAll);
+    email.addEventListener("input", checkAll);
+    confirmEmail.addEventListener("input", checkAll);
 
     document.getElementById("userForm").addEventListener("submit", function(e) {
       e.preventDefault();
@@ -66,8 +119,11 @@
       const payload = Object.fromEntries(formData.entries());
       payload.timestamp = new Date().toISOString();
       console.log("Submitting data:", payload);
-      alert("Thanks for submitting!");
+      alert("Thanks for signing up! Please check your email for confirmation.");
       this.reset();
+      confirmPassword.classList.remove("valid", "invalid");
+      confirmEmail.classList.remove("valid", "invalid");
+      submitBtn.disabled = true;
     });
   </script>
 </body>

@@ -151,3 +151,58 @@ button[disabled] {
   font-size: 16px;
   padding: 0;
 }
+
+/* === NEW: Username requirement hint === */
+.requirement {
+  display: block;
+  font-size: 13px;
+  color: #ccc;
+  margin-top: 4px;
+}
+
+/* === NEW: Password rules list === */
+.password-rules {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.4;
+}
+
+.rule.valid {
+  color: limegreen;
+}
+
+/* === NEW: Strength bar visual === */
+.strength-bar {
+  height: 5px;
+  width: 0%;
+  background: transparent;
+  border-radius: 5px;
+  margin-top: 8px;
+  transition: width 0.3s ease;
+}
+
+.score-1 { background: red; }
+.score-2 { background: orangered; }
+.score-3 { background: gold; }
+.score-4 { background: yellowgreen; }
+.score-5 { background: limegreen; }
+
+/* === Responsive === */
+@media (max-width: 480px) {
+  .form-container {
+    padding: 24px 16px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  input, select, button {
+    font-size: 15px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+}

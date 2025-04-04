@@ -4,9 +4,8 @@
   <meta charset="UTF-8">
   <title>OG Jewelry - Sign Up</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Libre+Franklin:wght@300;400;600&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Libre+Franklin:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body class="dark form-bg">
   <button id="darkToggle" class="dark-toggle">🌙</button>
@@ -15,21 +14,30 @@
     <img src="images/logo.png" alt="OG Jewelry Logo" class="logo">
     <p class="subtitle">Create your account</p>
 
-    <form id="userForm">
+    <form id="userForm" novalidate>
       <label>Username:
-        <input type="text" name="username" required placeholder="Choose a username">
+        <input type="text" id="username" name="username" required minlength="3" maxlength="20" pattern="^[a-zA-Z0-9._]+$" placeholder="Choose a username">
+        <small id="usernameHint" class="requirement">3–20 characters. Letters, numbers, . and _ only.</small>
       </label>
 
       <label>Password:
         <div class="password-wrapper">
-          <input type="password" id="password" name="password" required placeholder="Enter a password">
+          <input type="password" id="password" name="password" required minlength="8" maxlength="64" placeholder="Enter a strong password">
           <button type="button" class="toggle-password" onclick="togglePassword('password')">👁</button>
         </div>
+        <div class="password-rules">
+          <small id="length" class="rule">• 8–64 characters</small>
+          <small id="upper" class="rule">• At least one uppercase letter</small>
+          <small id="lower" class="rule">• At least one lowercase letter</small>
+          <small id="number" class="rule">• At least one number</small>
+          <small id="symbol" class="rule">• At least one special character</small>
+        </div>
+        <div id="strengthBar" class="strength-bar"></div>
       </label>
 
       <label>Confirm Password:
         <div class="password-wrapper">
-          <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Re-enter your password" onpaste="return false;">
+          <input type="password" id="confirmPassword" required placeholder="Re-enter your password" onpaste="return false;">
         </div>
       </label>
 
@@ -49,9 +57,7 @@
         <div class="password-wrapper">
           <input type="email" id="confirmEmail" name="confirmEmail" required placeholder="Re-enter your email">
         </div>
-        <small style="display:block; margin-top:4px; font-size:13px; color:#ccc;">
-          A confirmatory email will be sent to this address.
-        </small>
+        <small style="display:block; margin-top:4px; font-size:13px; color:#ccc;">A confirmatory email will be sent to this address.</small>
       </label>
 
       <label>Phone Number (optional):
@@ -59,7 +65,7 @@
       </label>
 
       <label>ZIP Code (optional):
-        <input type="text" name="zipCode" pattern="\\d{5}" placeholder="12345">
+        <input type="text" name="zipCode" pattern="\d{5}" placeholder="12345">
       </label>
 
       <button type="submit" id="submitBtn" disabled>Submit</button>
@@ -67,47 +73,99 @@
   </div>
 
   <script>
+    const username = document.getElementById("username");
+    const usernameHint = document.getElementById("usernameHint");
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
     const email = document.getElementById("email");
     const confirmEmail = document.getElementById("confirmEmail");
     const submitBtn = document.getElementById("submitBtn");
 
+    const length = document.getElementById("length");
+    const upper = document.getElementById("upper");
+    const lower = document.getElementById("lower");
+    const number = document.getElementById("number");
+    const symbol = document.getElementById("symbol");
+    const strengthBar = document.getElementById("strengthBar");
+
+    document.getElementById("darkToggle").addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+    });
+
     function togglePassword(fieldId) {
       const field = document.getElementById(fieldId);
       field.type = field.type === "password" ? "text" : "password";
     }
 
-    function validatePassword() {
+    function updatePasswordRules(pw) {
+      const hasUpper = /[A-Z]/.test(pw);
+      const hasLower = /[a-z]/.test(pw);
+      const hasNumber = /\d/.test(pw);
+      const hasSymbol = /[@$!%*?&]/.test(pw);
+      const hasLength = pw.length >= 8 && pw.length <= 64;
+
+      upper.classList.toggle("valid", hasUpper);
+      lower.classList.toggle("valid", hasLower);
+      number.classList.toggle("valid", hasNumber);
+      symbol.classList.toggle("valid", hasSymbol);
+      length.classList.toggle("valid", hasLength);
+
+      const score = [hasUpper, hasLower, hasNumber, hasSymbol, hasLength].filter(Boolean).length;
+      strengthBar.style.width = (score * 20) + "%";
+      strengthBar.className = "strength-bar score-" + score;
+    }
+
+    function validateUsername() {
+      const pattern = /^[a-zA-Z0-9._]{3,20}$/;
+      const available = username.value !== "takenuser"; // mock check
+      const valid = pattern.test(username.value);
+
+      if (valid && available) {
+        username.classList.add("valid");
+        username.classList.remove("invalid");
+        usernameHint.textContent = "✅ Username is available";
+        usernameHint.style.color = "limegreen";
+        return true;
+      } else {
+        username.classList.remove("valid");
+        username.classList.add("invalid");
+        usernameHint.textContent = valid ? "❌ Username is taken" : "❌ Invalid username format";
+        usernameHint.style.color = "crimson";
+        return false;
+      }
+    }
+
+    function validatePasswordMatch() {
       if (confirmPassword.value.length === 0) {
         confirmPassword.classList.remove("valid", "invalid");
         return false;
       }
-
-      const match = password.value === confirmPassword.value && password.value.length > 0;
+      const match = password.value === confirmPassword.value && password.validity.valid;
       confirmPassword.classList.toggle("valid", match);
       confirmPassword.classList.toggle("invalid", !match);
       return match;
     }
 
-    function validateEmail() {
+    function validateEmailMatch() {
       if (confirmEmail.value.length === 0) {
         confirmEmail.classList.remove("valid", "invalid");
         return false;
       }
-
-      const match = email.value === confirmEmail.value && email.value.length > 0;
+      const match = email.value === confirmEmail.value && email.validity.valid;
       confirmEmail.classList.toggle("valid", match);
       confirmEmail.classList.toggle("invalid", !match);
       return match;
     }
 
     function checkAll() {
-      const pass = validatePassword();
-      const mail = validateEmail();
-      submitBtn.disabled = !(pass && mail);
+      updatePasswordRules(password.value);
+      const validUser = validateUsername();
+      const pass = validatePasswordMatch();
+      const mail = validateEmailMatch();
+      submitBtn.disabled = !(validUser && pass && mail);
     }
 
+    username.addEventListener("input", checkAll);
     password.addEventListener("input", checkAll);
     confirmPassword.addEventListener("input", checkAll);
     email.addEventListener("input", checkAll);
@@ -121,8 +179,11 @@
       console.log("Submitting data:", payload);
       alert("Thanks for signing up! Please check your email for confirmation.");
       this.reset();
-      confirmPassword.classList.remove("valid", "invalid");
-      confirmEmail.classList.remove("valid", "invalid");
+      document.querySelectorAll(".valid, .invalid").forEach(el => el.classList.remove("valid", "invalid"));
+      strengthBar.style.width = "0%";
+      strengthBar.className = "strength-bar";
+      usernameHint.textContent = "3–20 characters. Letters, numbers, . and _ only.";
+      usernameHint.style.color = "#ccc";
       submitBtn.disabled = true;
     });
   </script>

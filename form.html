@@ -16,12 +16,12 @@
     <p class="subtitle">Create your account</p>
 
     <form id="userForm" novalidate>
-      <label>Username:
+      <label class="required"><span class="asterisk">*</span> Username:
         <input type="text" id="username" name="username" required minlength="3" maxlength="20" pattern="^[a-zA-Z0-9._]+$" placeholder="Choose a username">
         <small id="usernameHint" class="requirement">3–20 characters. Letters, numbers, . and _ only.</small>
       </label>
 
-      <label>Password:
+      <label class="required"><span class="asterisk">*</span> Password:
         <div class="password-wrapper">
           <input type="password" id="password" name="password" required minlength="8" maxlength="64" placeholder="Enter a strong password">
           <button type="button" class="toggle-password" onclick="togglePassword('password')">👁</button>
@@ -36,28 +36,28 @@
         <div id="strengthBar" class="strength-bar"></div>
       </label>
 
-      <label>Confirm Password:
+      <label class="required"><span class="asterisk">*</span> Confirm Password:
         <div class="password-wrapper">
           <input type="password" id="confirmPassword" required placeholder="Re-enter your password" onpaste="return false">
         </div>
       </label>
 
-      <label>First Name:
+      <label class="required"><span class="asterisk">*</span> First Name:
         <input type="text" name="firstName" required placeholder="Enter your first name">
       </label>
 
-      <label>Last Name:
+      <label class="required"><span class="asterisk">*</span> Last Name:
         <input type="text" name="lastName" required placeholder="Enter your last name">
       </label>
 
-      <label>Email Address:
+      <label class="required"><span class="asterisk">*</span> Email Address:
         <input type="email" id="email" name="email" required placeholder="Enter your email">
         <small id="emailStatus" class="status-message"></small>
       </label>
 
-      <label>Confirm Email Address:
+      <label class="required"><span class="asterisk">*</span> Confirm Email Address:
         <div class="password-wrapper">
-          <input type="email" id="confirmEmail" name="confirmEmail" required placeholder="Re-enter your email">
+          <input type="email" id="confirmEmail" name="confirmEmail" required placeholder="Re-enter your email" onpaste="return false">
         </div>
         <small style="display:block; margin-top:4px; font-size:13px; color:#ccc;">
           A confirmatory email will be sent to this address.
@@ -70,7 +70,8 @@
       </label>
 
       <label>ZIP Code (optional):
-        <input type="text" name="zipCode" pattern="\\d{5}" placeholder="12345">
+        <input type="text" id="zipCode" name="zipCode" pattern="\d{5}" placeholder="12345">
+        <small id="zipStatus" class="status-message"></small>
       </label>
 
       <button type="submit" id="submitBtn" disabled>Submit</button>
@@ -87,6 +88,7 @@
     const email = document.getElementById("email");
     const confirmEmail = document.getElementById("confirmEmail");
     const phone = document.getElementById("phone");
+    const zip = document.getElementById("zipCode");
     const submitBtn = document.getElementById("submitBtn");
 
     const length = document.getElementById("length");
@@ -195,6 +197,31 @@
       }
     }
 
+    function validateZip() {
+      const zipStatus = document.getElementById("zipStatus");
+      const zipValue = zip.value.trim();
+      const valid = /^[0-9]{5}$/.test(zipValue);
+
+      if (zipValue === "") {
+        zip.classList.remove("valid", "invalid");
+        zipStatus.textContent = "";
+        return true;
+      }
+
+      zip.classList.toggle("valid", valid);
+      zip.classList.toggle("invalid", !valid);
+
+      if (valid) {
+        zipStatus.textContent = "ZIP code is valid.";
+        zipStatus.style.color = "limegreen";
+      } else {
+        zipStatus.textContent = "Invalid ZIP code. Please enter a 5-digit US ZIP.";
+        zipStatus.style.color = "crimson";
+      }
+
+      return valid;
+    }
+
     function validatePasswordMatch() {
       if (confirmPassword.value.length === 0) {
         confirmPassword.classList.remove("valid", "invalid");
@@ -224,7 +251,8 @@
       const user = username.classList.contains("valid");
       const emailValid = email.classList.contains("valid");
       const phoneValid = phone.classList.contains("valid") || phone.value === "";
-      submitBtn.disabled = !(user && pass && mail && emailValid && phoneValid);
+      const zipValid = validateZip();
+      submitBtn.disabled = !(user && pass && mail && emailValid && phoneValid && zipValid);
     }
 
     username.addEventListener("input", debounce(e => {
@@ -245,9 +273,28 @@
     password.addEventListener("input", checkAll);
     confirmPassword.addEventListener("input", checkAll);
     confirmEmail.addEventListener("input", checkAll);
+    zip.addEventListener("input", checkAll);
 
     document.getElementById("userForm").addEventListener("submit", function(e) {
       e.preventDefault();
+
+      const formData = {
+        username: username.value,
+        password: password.value,
+        firstName: document.querySelector('[name="firstName"]').value,
+        lastName: document.querySelector('[name="lastName"]').value,
+        email: email.value
+      };
+
+      if (phone.classList.contains("valid")) {
+        formData.phone = iti.getNumber();
+      }
+
+      if (zip.classList.contains("valid")) {
+        formData.zipCode = zip.value;
+      }
+
+      console.log("Submitting to backend:", formData);
       alert("Form submitted successfully!");
     });
   </script>

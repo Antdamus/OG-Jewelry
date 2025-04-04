@@ -67,6 +67,13 @@ label {
   color: #f5f5f5;
   display: block;
   font-size: 15px;
+  position: relative;
+}
+
+label .asterisk {
+  color: #d4af7f;
+  margin-right: 6px;
+  font-weight: bold;
 }
 
 /* === INPUTS === */

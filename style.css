@@ -1,3 +1,4 @@
+/* === BASE === */
 body {
   margin: 0;
   padding: 0;
@@ -38,6 +39,7 @@ body.form-bg::before {
   z-index: 1000;
 }
 
+/* === FORM CONTAINER === */
 .form-container {
   position: relative;
   z-index: 1;
@@ -52,6 +54,7 @@ body.form-bg::before {
   box-sizing: border-box;
 }
 
+/* === FORM ELEMENTS === */
 form {
   display: flex;
   flex-direction: column;
@@ -66,6 +69,7 @@ label {
   font-size: 15px;
 }
 
+/* === INPUTS === */
 input[type="text"],
 input[type="number"],
 input[type="password"],
@@ -87,6 +91,11 @@ input::placeholder {
   color: #aaa;
 }
 
+input[type="checkbox"] {
+  transform: scale(1.2);
+  accent-color: #d4af7f;
+}
+
 input.valid {
   border-color: limegreen;
 }
@@ -95,6 +104,7 @@ input.invalid {
   border-color: crimson;
 }
 
+/* === LOGO === */
 .logo {
   max-width: 120px;
   margin: 0 auto 20px;
@@ -102,6 +112,7 @@ input.invalid {
   filter: drop-shadow(0 0 6px rgba(212, 175, 127, 0.6));
 }
 
+/* === SUBTITLE === */
 .subtitle {
   font-family: 'Playfair Display', serif;
   font-size: 22px;
@@ -110,6 +121,68 @@ input.invalid {
   text-shadow: 0 0 4px rgba(212, 175, 127, 0.3);
 }
 
+/* === PASSWORD TOGGLE === */
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #f5f5f5;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+}
+
+/* === PASSWORD RULES === */
+.password-rules {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.4;
+}
+
+.rule.valid {
+  color: limegreen;
+}
+
+/* === STRENGTH BAR === */
+.strength-bar {
+  height: 5px;
+  width: 0%;
+  background: transparent;
+  border-radius: 5px;
+  margin-top: 8px;
+  transition: width 0.3s ease;
+}
+
+.score-1 { background: red; }
+.score-2 { background: orangered; }
+.score-3 { background: gold; }
+.score-4 { background: yellowgreen; }
+.score-5 { background: limegreen; }
+
+/* === STATUS MESSAGES === */
+.status-message {
+  font-size: 13px;
+  margin-top: 4px;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+/* === INFO TEXT === */
+.requirement {
+  font-size: 13px;
+  color: #ccc;
+  margin-top: 4px;
+}
+
+/* === SUBMIT BUTTON === */
 button[type="submit"] {
   display: inline-block;
   padding: 12px 24px;
@@ -135,60 +208,31 @@ button[disabled] {
   cursor: not-allowed;
 }
 
-.password-wrapper {
-  position: relative;
+/* === PHONE (intl-tel-input) === */
+.iti {
+  width: 100%;
 }
 
-.toggle-password {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
+.iti__country-list {
+  background-color: #222;
   color: #f5f5f5;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 0;
+  border: 1px solid #444;
 }
 
-/* === NEW: Username requirement hint === */
-.requirement {
-  display: block;
-  font-size: 13px;
-  color: #ccc;
-  margin-top: 4px;
+.iti__country {
+  background-color: #222;
+  color: #f5f5f5;
 }
 
-/* === NEW: Password rules list === */
-.password-rules {
-  margin-top: 8px;
-  font-size: 13px;
-  color: #aaa;
-  line-height: 1.4;
+.iti__country:hover {
+  background-color: #333;
 }
 
-.rule.valid {
-  color: limegreen;
+.iti__flag-box {
+  margin-right: 10px;
 }
 
-/* === NEW: Strength bar visual === */
-.strength-bar {
-  height: 5px;
-  width: 0%;
-  background: transparent;
-  border-radius: 5px;
-  margin-top: 8px;
-  transition: width 0.3s ease;
-}
-
-.score-1 { background: red; }
-.score-2 { background: orangered; }
-.score-3 { background: gold; }
-.score-4 { background: yellowgreen; }
-.score-5 { background: limegreen; }
-
-/* === Responsive === */
+/* === RESPONSIVE === */
 @media (max-width: 480px) {
   .form-container {
     padding: 24px 16px;

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>OG Jewelry - Sign Up</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Libre+Franklin:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
@@ -37,7 +38,7 @@
 
       <label>Confirm Password:
         <div class="password-wrapper">
-          <input type="password" id="confirmPassword" required placeholder="Re-enter your password" onpaste="return false;">
+          <input type="password" id="confirmPassword" required placeholder="Re-enter your password" onpaste="return false">
         </div>
       </label>
 
@@ -51,27 +52,33 @@
 
       <label>Email Address:
         <input type="email" id="email" name="email" required placeholder="Enter your email">
+        <small id="emailStatus" class="status-message"></small>
       </label>
 
       <label>Confirm Email Address:
         <div class="password-wrapper">
           <input type="email" id="confirmEmail" name="confirmEmail" required placeholder="Re-enter your email">
         </div>
-        <small style="display:block; margin-top:4px; font-size:13px; color:#ccc;">A confirmatory email will be sent to this address.</small>
+        <small style="display:block; margin-top:4px; font-size:13px; color:#ccc;">
+          A confirmatory email will be sent to this address.
+        </small>
       </label>
 
       <label>Phone Number (optional):
-        <input type="tel" name="phone" placeholder="To receive SMS alerts when the show goes live">
+        <input type="tel" id="phone" name="phone" placeholder="Your phone number">
+        <small id="phoneStatus" class="status-message"></small>
       </label>
 
       <label>ZIP Code (optional):
-        <input type="text" name="zipCode" pattern="\d{5}" placeholder="12345">
+        <input type="text" name="zipCode" pattern="\\d{5}" placeholder="12345">
       </label>
 
       <button type="submit" id="submitBtn" disabled>Submit</button>
     </form>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js"></script>
   <script>
     const username = document.getElementById("username");
     const usernameHint = document.getElementById("usernameHint");
@@ -79,6 +86,7 @@
     const confirmPassword = document.getElementById("confirmPassword");
     const email = document.getElementById("email");
     const confirmEmail = document.getElementById("confirmEmail");
+    const phone = document.getElementById("phone");
     const submitBtn = document.getElementById("submitBtn");
 
     const length = document.getElementById("length");
@@ -88,8 +96,13 @@
     const symbol = document.getElementById("symbol");
     const strengthBar = document.getElementById("strengthBar");
 
-    document.getElementById("darkToggle").addEventListener("click", () => {
-      document.body.classList.toggle("dark");
+    const iti = window.intlTelInput(phone, {
+      initialCountry: "us",
+      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js"
+    });
+
+    document.getElementById('darkToggle').addEventListener('click', () => {
+      document.body.classList.toggle('dark');
     });
 
     function togglePassword(fieldId) {
@@ -97,10 +110,18 @@
       field.type = field.type === "password" ? "text" : "password";
     }
 
+    function debounce(func, delay = 300) {
+      let timer;
+      return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+
     function updatePasswordRules(pw) {
       const hasUpper = /[A-Z]/.test(pw);
       const hasLower = /[a-z]/.test(pw);
-      const hasNumber = /\d/.test(pw);
+      const hasNumber = /[0-9]/.test(pw);
       const hasSymbol = /[@$!%*?&]/.test(pw);
       const hasLength = pw.length >= 8 && pw.length <= 64;
 
@@ -115,23 +136,62 @@
       strengthBar.className = "strength-bar score-" + score;
     }
 
-    function validateUsername() {
+    function validateUsername(value) {
       const pattern = /^[a-zA-Z0-9._]{3,20}$/;
-      const available = username.value !== "takenuser"; // mock check
-      const valid = pattern.test(username.value);
-
-      if (valid && available) {
+      const taken = value === "takenuser"; // mock
+      const valid = pattern.test(value);
+      if (valid && !taken) {
         username.classList.add("valid");
         username.classList.remove("invalid");
-        usernameHint.textContent = "✅ Username is available";
+        usernameHint.textContent = "Username is available";
         usernameHint.style.color = "limegreen";
         return true;
       } else {
         username.classList.remove("valid");
         username.classList.add("invalid");
-        usernameHint.textContent = valid ? "❌ Username is taken" : "❌ Invalid username format";
+        usernameHint.textContent = taken ? "Username is taken" : "Invalid username format";
         usernameHint.style.color = "crimson";
         return false;
+      }
+    }
+
+    function validateEmail(value) {
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      const taken = value.trim().toLowerCase() === "taken@email.com"; // mock
+      const emailStatus = document.getElementById("emailStatus");
+
+      email.classList.toggle("valid", valid && !taken);
+      email.classList.toggle("invalid", !valid || taken);
+
+      if (!valid) {
+        emailStatus.textContent = "Please enter a valid email address.";
+        emailStatus.style.color = "crimson";
+      } else if (taken) {
+        emailStatus.textContent = "This email is already in use.";
+        emailStatus.style.color = "crimson";
+      } else {
+        emailStatus.textContent = "Email is valid and available.";
+        emailStatus.style.color = "limegreen";
+      }
+    }
+
+    function validatePhone() {
+      const valid = iti.isValidNumber();
+      const taken = iti.getNumber() === "+11234567890"; // mock
+      const phoneStatus = document.getElementById("phoneStatus");
+
+      phone.classList.toggle("valid", valid && !taken);
+      phone.classList.toggle("invalid", !valid || taken);
+
+      if (!valid) {
+        phoneStatus.textContent = "Please enter a valid phone number.";
+        phoneStatus.style.color = "crimson";
+      } else if (taken) {
+        phoneStatus.textContent = "This phone number is already in use.";
+        phoneStatus.style.color = "crimson";
+      } else {
+        phoneStatus.textContent = "Phone number is valid and available.";
+        phoneStatus.style.color = "limegreen";
       }
     }
 
@@ -159,32 +219,36 @@
 
     function checkAll() {
       updatePasswordRules(password.value);
-      const validUser = validateUsername();
       const pass = validatePasswordMatch();
       const mail = validateEmailMatch();
-      submitBtn.disabled = !(validUser && pass && mail);
+      const user = username.classList.contains("valid");
+      const emailValid = email.classList.contains("valid");
+      const phoneValid = phone.classList.contains("valid") || phone.value === "";
+      submitBtn.disabled = !(user && pass && mail && emailValid && phoneValid);
     }
 
-    username.addEventListener("input", checkAll);
+    username.addEventListener("input", debounce(e => {
+      validateUsername(e.target.value);
+      checkAll();
+    }));
+
+    email.addEventListener("input", debounce(e => {
+      validateEmail(e.target.value);
+      checkAll();
+    }));
+
+    phone.addEventListener("input", debounce(() => {
+      validatePhone();
+      checkAll();
+    }));
+
     password.addEventListener("input", checkAll);
     confirmPassword.addEventListener("input", checkAll);
-    email.addEventListener("input", checkAll);
     confirmEmail.addEventListener("input", checkAll);
 
     document.getElementById("userForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const formData = new FormData(this);
-      const payload = Object.fromEntries(formData.entries());
-      payload.timestamp = new Date().toISOString();
-      console.log("Submitting data:", payload);
-      alert("Thanks for signing up! Please check your email for confirmation.");
-      this.reset();
-      document.querySelectorAll(".valid, .invalid").forEach(el => el.classList.remove("valid", "invalid"));
-      strengthBar.style.width = "0%";
-      strengthBar.className = "strength-bar";
-      usernameHint.textContent = "3–20 characters. Letters, numbers, . and _ only.";
-      usernameHint.style.color = "#ccc";
-      submitBtn.disabled = true;
+      alert("Form submitted successfully!");
     });
   </script>
 </body>

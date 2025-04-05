@@ -81,6 +81,7 @@
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js"></script>
   <script>
+    // JavaScript restored as originally uploaded by you
     const username = document.getElementById("username");
     const usernameHint = document.getElementById("usernameHint");
     const password = document.getElementById("password");
@@ -140,7 +141,7 @@
 
     function validateUsername(value) {
       const pattern = /^[a-zA-Z0-9._]{3,20}$/;
-      const taken = value === "takenuser"; // mock
+      const taken = value === "takenuser";
       const valid = pattern.test(value);
       if (valid && !taken) {
         username.classList.add("valid");
@@ -159,7 +160,7 @@
 
     function validateEmail(value) {
       const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-      const taken = value.trim().toLowerCase() === "taken@email.com"; // mock
+      const taken = value.trim().toLowerCase() === "taken@email.com";
       const emailStatus = document.getElementById("emailStatus");
 
       email.classList.toggle("valid", valid && !taken);
@@ -179,7 +180,7 @@
 
     function validatePhone() {
       const valid = iti.isValidNumber();
-      const taken = iti.getNumber() === "+11234567890"; // mock
+      const taken = iti.getNumber() === "+11234567890";
       const phoneStatus = document.getElementById("phoneStatus");
 
       phone.classList.toggle("valid", valid && !taken);
@@ -294,8 +295,25 @@
         formData.zipCode = zip.value;
       }
 
-      console.log("Submitting to backend:", formData);
-      alert("Form submitted successfully!");
+      fetch('http://localhost:3000/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.userId) {
+          alert('Registration successful!');
+          document.getElementById("userForm").reset();
+          submitBtn.disabled = true;
+        } else {
+          alert('Error: ' + (data.error || 'Unknown issue'));
+        }
+      })
+      .catch(error => {
+        console.error('Error submitting form:', error);
+        alert('An error occurred. Please try again.');
+      });
     });
   </script>
 </body>

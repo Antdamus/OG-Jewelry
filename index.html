@@ -9,8 +9,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body class="dark hero-bg">
+
+  <!-- Background video -->
+  <video autoplay muted loop playsinline class="background-video">
+    <source src="videos/background_optimized.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Dark mode toggle -->
   <button id="darkToggle" class="dark-toggle">🌙</button>
 
+  <!-- Centered button -->
   <div class="hero-wrapper fade-field fade-delay-1">
     <a href="form.html" class="enter-button">Enter the Boutique →</a>
   </div>
@@ -20,5 +29,6 @@
       document.body.classList.toggle('dark');
     });
   </script>
+
 </body>
 </html>

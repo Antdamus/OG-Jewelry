@@ -5,6 +5,11 @@ body {
   font-family: 'Libre Franklin', sans-serif;
   background-color: #000;
   overflow: hidden;
+  transition: opacity 0.4s ease;
+}
+
+body.fade-out {
+  opacity: 0;
 }
 
 /* === BACKGROUND VIDEO === */
@@ -41,4 +46,22 @@ body {
   color: #f1f1f1;
   cursor: pointer;
   z-index: 3;
+}
+
+/* === JOIN LA FAMILIA ZONE (CLICKABLE AREA) === */
+.join-familia-zone {
+  position: absolute;
+  top: 69.9%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 90px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.join-familia-zone:hover {
+  box-shadow: 0 0 12px rgba(212, 175, 127, 0.5); /* soft gold */
+  border-radius: 12px;
+  transition: box-shadow 0.3s ease;
 }

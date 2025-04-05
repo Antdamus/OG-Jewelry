@@ -12,19 +12,11 @@ body.form-bg {
   overflow-y: auto;
   min-height: 100vh;
   padding: 60px 20px;
-  background-image: url("images/decor-top.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background: none;
 }
 
 body.form-bg::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 0;
+  content: none;
 }
 
 .dark-toggle {
@@ -39,6 +31,19 @@ body.form-bg::before {
   z-index: 1000;
 }
 
+/* === BACKGROUND VIDEO === */
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 1;
+  pointer-events: none;
+}
+
 /* === FORM CONTAINER === */
 .form-container {
   position: relative;
@@ -47,7 +52,7 @@ body.form-bg::before {
   max-width: 500px;
   width: 100%;
   margin: 0 auto;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.99);
   border-radius: 16px;
   text-align: center;
   box-shadow: 0 0 30px rgba(212, 175, 127, 0.2);

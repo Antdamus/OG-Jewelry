@@ -1,12 +1,12 @@
 window.addEventListener('DOMContentLoaded', () => {
-    const linkZone = document.querySelector('.join-familia-zone');
-    if (linkZone) {
-      linkZone.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.body.classList.add('fade-out');
-        setTimeout(() => {
-          window.location.href = 'form.html';
-        }, 4000);
-      });
-    }
+  const joinBtn = document.getElementById('joinButton');
+  const overlay = document.getElementById('transitionOverlay');
+
+  joinBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    overlay.style.opacity = '1';
+    setTimeout(() => {
+      window.location.href = 'form.html';
+    }, 400); // Match transition timing
   });
+});

@@ -5,11 +5,26 @@ body {
   font-family: 'Libre Franklin', sans-serif;
   background-color: #000;
   overflow: hidden;
-  transition: opacity 4s ease;
+}
+
+/* === FADE TRANSITION === */
+body {
+  opacity: 1;
+  transition: opacity 0.4s ease;
 }
 
 body.fade-out {
   opacity: 0;
+}
+
+#transitionOverlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
 }
 
 /* === BACKGROUND VIDEO === */
@@ -23,19 +38,35 @@ body.fade-out {
   z-index: 0;
 }
 
-/* === CLICKABLE LOGO AREA === */
-.splash-logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 320px; /* adjust as needed */
-  height: 180px; /* adjust as needed */
-  cursor: pointer;
-  z-index: 2;
+/* === JOIN BUTTON === */
+@font-face {
+  font-family: 'ParadiseSignature';
+  src: url('fonts/Paradise Signature.otf') format('opentype');
 }
 
-/* === OPTIONAL: DARK MODE TOGGLE === */
+.join-button {
+  font-family: 'ParadiseSignature', serif;
+  font-size: 2.2rem;
+  color: #d4af7f;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 65vh; /* Position closer to logo */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-shadow: 0 0 8px rgba(212, 175, 127, 0.4);
+  transition: text-shadow 0.3s ease;
+  white-space: nowrap;
+  padding: 0;
+}
+
+.join-button:hover {
+  text-shadow: 0 0 16px rgba(212, 175, 127, 0.7);
+}
+
+/* === DARK MODE TOGGLE === */
 .dark-toggle {
   position: absolute;
   top: 20px;
@@ -45,23 +76,12 @@ body.fade-out {
   border: none;
   color: #f1f1f1;
   cursor: pointer;
-  z-index: 3;
+  z-index: 5;
 }
 
-/* === JOIN LA FAMILIA ZONE (CLICKABLE AREA) === */
-.join-familia-zone {
-  position: absolute;
-  top: 69.9%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  height: 90px;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.join-familia-zone:hover {
-  box-shadow: 0 0 12px rgba(212, 175, 127, 0.5); /* soft gold */
-  border-radius: 12px;
-  transition: box-shadow 0.3s ease;
+@media (max-width: 480px) {
+  .join-button {
+    font-size: 1.6rem;
+    top: 60vh;
+  }
 }

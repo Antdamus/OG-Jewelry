@@ -1,26 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>OG Jewelry</title>
-  <link rel="stylesheet" href="styleindex.css">
+  <link rel="stylesheet" href="styleindex.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Libre+Franklin:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- 🖋️ Calligraphy font -->
+  <style>
+    @font-face {
+      font-family: 'ParadiseSignature';
+      src: url('fonts/Paradise Signature.otf') format('opentype');
+    }
+  </style>
 </head>
 <body>
-  <!-- Background Video -->
-  <video autoplay muted playsinline loop class="background-video">
-    <source src="videos/background_optimized_cuban.mp4" type="video/mp4">
+
+  <!-- 🔲 Black transition overlay -->
+  <div id="transitionOverlay"></div>
+
+  <!-- 🎥 Background Cinematic Video -->
+  <video autoplay muted playsinline class="background-video">
+    <source src="videos/background_optimized_cuban.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
 
-  <!-- Clickable "Join la Familia" area -->
-  <div class="join-familia-zone"></div>
+  <!-- ✨ Calligraphy "Join la Familia" Button -->
+  <button class="join-button" id="joinButton">Join la Familia</button>
 
-  <!-- Optional dark mode toggle -->
+  <!-- 🌙 Optional dark mode toggle -->
   <button class="dark-toggle" onclick="document.body.classList.toggle('dark')">🌙</button>
 
-  <!-- Custom behavior -->
+  <!-- 🚀 JS Logic -->
   <script src="scripts/index.js"></script>
 </body>
 </html>
